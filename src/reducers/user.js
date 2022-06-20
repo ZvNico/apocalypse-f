@@ -5,22 +5,26 @@ import {
     SIGN_UP
 } from "../actions/type"
 
-const initialState = [];
+const initialState = {
+    user: null,
+    token_access: null,
+    token_refresh: null
+}
 
 
-const userReducer = (games = initialState, action) => {
+const userReducer = (user = initialState, action) => {
     const {type, payload} = action
     switch (type) {
         case RETRIEVE_USER_BY_ID:
-            return payload
+            return user
         case LOGIN:
-            return [...games, payload]
+            return {user: payload.user, token_access: payload.access, token_refresh: payload.refresh}
         case SIGN_UP:
-            return
+            return user
         case LOGOUT:
-            return
+            return initialState
         default:
-            return games
+            return user
     }
 }
 

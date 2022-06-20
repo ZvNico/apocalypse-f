@@ -14,12 +14,11 @@ const Login = () => {
     return (
         <Box sx={{
             width: "100%",
-            height: "calc(100vh - 200px)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center"
         }}>
-            <Stack justifyContent={"flex-start"} spacing={2} direction={"column"} sx={{width: "500px"}}>
+            <Stack justifyContent={"flex-start"} mt={3} spacing={2} direction={"column"} sx={{width: "500px"}}>
                 <Typography sx={{color: "white", fontSize: "1.5rem"}}>Se connecter</Typography>
                 <form onSubmit={handleSubmit}>
                     <Stack spacing={2} direction={"column"}>
