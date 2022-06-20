@@ -28,10 +28,6 @@ const Footer = () => {
     ]
     return (
         <Box sx={{
-            position: "absolute",
-            bottom: 0,
-            zIndex: 1,
-            transform: "translateY(100%)",
             backgroundColor: "primary.contrastText",
             width: "100%",
             p: 2,

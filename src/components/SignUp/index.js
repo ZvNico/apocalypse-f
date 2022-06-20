@@ -19,7 +19,12 @@ const SignUp = () => {
         return <Navigate to={"/login"}/>
     }
     return (<Box sx={{
-        width: "100%", display: "flex", justifyContent: "center", alignItems: "center"
+        backgroundColor: "primary.contrastText",
+        height: "calc(100vh - 100px)",
+        width: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
     }}>
         <Stack justifyContent={"flex-start"} mt={3} spacing={2} direction={"column"} sx={{width: "500px"}}>
             <Typography sx={{color: "white", fontSize: "1.5rem"}}>S'inscrire</Typography>

@@ -6,10 +6,7 @@ import {Link} from "react-router-dom"
 
 const Games = (props) => {
     const games = useSelector(state => state.games)
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getAllGames())
-    }, [])
+
     return (
         <Grid container sx={{width: "100%", minHeight: "100%", mt: 2}} spacing={2}>
             {games.map(game => {
@@ -34,7 +31,7 @@ const Games = (props) => {
                                         left: 0,
                                         px: 1,
                                         py: 0.5,
-                                        transform: "translate(-10%, +10%)",
+                                        transform: "translate(-10%, 10%)",
                                         backgroundColor: "secondary.main",
                                         borderRadius: 1,
                                     }}>

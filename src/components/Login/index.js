@@ -19,6 +19,8 @@ const Login = () => {
     return (
         <Box sx={{
             width: "100%",
+            backgroundColor: "primary.contrastText",
+            height: "calc(100vh - 100px)",
             display: "flex",
             justifyContent: "center",
             alignItems: "center"

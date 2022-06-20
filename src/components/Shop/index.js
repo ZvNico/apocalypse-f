@@ -4,8 +4,12 @@ import Games from "../Games";
 const Shop = () => {
     return (
         <Box sx={{
+            mt: 3,
+            px: "10%",
+            backgroundColor: "primary.contrastText",
             width: "100%",
-            height: "calc(100vh - 84px)"
+            minHeight: "calc(100vh - 100px)",
+            height: "calc(100%)"
         }}>
             <Games/>
         </Box>
