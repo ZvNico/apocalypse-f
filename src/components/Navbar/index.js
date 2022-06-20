@@ -1,12 +1,18 @@
-import {Button, Stack, Typography, useTheme} from "@mui/material";
+import {Button, Stack, Typography, useTheme, Menu, MenuItem} from "@mui/material";
 import {AccountCircle} from '@mui/icons-material'
 import {Link} from "react-router-dom"
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux"
+import {logout} from "../../actions/auth";
 
 const Navbar = () => {
     const theme = useTheme()
+    const dispatch = useDispatch()
+    const [open, setOpen] = useState(false)
+    const user = useSelector(state => state.user.user)
     const menuItems = [
         {
-            name: "Acceuil",
+            name: "Accueil",
             link: "/",
             icon: null
         },
@@ -14,11 +20,23 @@ const Navbar = () => {
             name: "Boutique",
             link: "/shop",
             icon: null
-        }, {
-            name: "Connexion",
-            link: "/login   ",
-            icon: AccountCircle,
         },
+        (user && {
+            name: user.username,
+            link: "/",
+            icon: null,
+        }),
+        (user && {
+            name: "se deconnecter",
+            link: "/",
+            icon: null,
+            onClick: () => dispatch(logout()),
+        }),
+        (!user && {
+            name: "Connexion",
+            link: "/login",
+            icon: AccountCircle,
+        }),
     ]
     return (
         <Stack direction={"row"}
@@ -34,12 +52,17 @@ const Navbar = () => {
                        py: 1,
                    }
                }}>
-            {menuItems.map((item, index) => {
+            {menuItems.filter(item => item?.name != null).map((item, index) => {
                 return <Button
                     color={"primary"}
                     key={`menu-item-${index}`}
-                    component={Link}
-                    to={item.link}
+                    component={item.link ? Link : null}
+                    to={item.link ? item.link : null}
+                    onClick={() => {
+                        if (item.onClick) {
+                            item.onClick()
+                        }
+                    }}
                     sx={{
                         display: "flex",
                         alignItems: "center"
@@ -49,7 +72,8 @@ const Navbar = () => {
                     }}/>}
                     <Typography sx={{textAlign: "center"}}>{item.name}</Typography>
                 </Button>
-            })}
+            })
+            }
         </Stack>
     )
 }

@@ -1,15 +1,24 @@
 import Logo from "../Logo";
 import Navbar from "../Navbar";
 import backgroundVideo from "./../../assets/videos/Background.mp4"
-import {Box, Stack, Typography, Button} from "@mui/material";
+import {Box, Stack, Typography, Button, Snackbar, Alert} from "@mui/material";
 import Footer from "../Footer";
 import {Link, Route, Routes} from "react-router-dom";
 import Shop from "../Shop"
 import Game from "../Game"
 import Login from "../Login"
 import SignUp from "../SignUp"
+import {useEffect, useState} from "react";
+import {useSelector} from "react-redux";
 
 const Home = () => {
+    const [logged, setLogged] = useState(false)
+    const user = useSelector(state => state.user.user)
+    useEffect(() => {
+        if (user) {
+            setLogged(true)
+        }
+    }, [user])
     return (
         <Stack
             direction={"column"}
@@ -118,6 +127,12 @@ const Home = () => {
                    muted>
                 <source src={backgroundVideo} type={"video/mp4"}/>
             </video>
+            <Snackbar
+                open={logged}
+                autoHideDuration={6000}
+                onClose={() => setLogged(false)}>
+                <Alert variant={"filled"} severity="success">{`Connecté, Bonjour ${user?.username} !`}</Alert>
+            </Snackbar>
             <Footer/>
         </Stack>)
 }

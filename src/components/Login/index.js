@@ -1,15 +1,20 @@
-import {Box, TextField, Stack, Typography, Button} from "@mui/material"
+import {Box, TextField, Stack, Typography, Button, Link} from "@mui/material"
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../actions/user";
+import {login} from "../../actions/auth";
+import {Link as RouterLink, Navigate} from "react-router-dom";
 
 const Login = () => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
+    const user = useSelector(state => state.user.user)
     const [password, setPassword] = useState("")
     const handleSubmit = (event) => {
         dispatch(login(email, password))
         event.preventDefault()
+    }
+    if (user) {
+        return <Navigate to={"/"}/>
     }
     return (
         <Box sx={{
@@ -32,6 +37,11 @@ const Login = () => {
                                    label={"Password"}
                                    type={"password"}/>
                         <Button color={"secondary"} type={"submit"} variant={"contained"}>OK</Button>
+                        <Link sx={{fontSize: ".9rem", color: "lightgrey"}}
+                              component={RouterLink}
+                              to={"/signUp"}>
+                            Pas de compte ? Inscrivez-vous
+                        </Link>
                     </Stack>
                 </form>
             </Stack>

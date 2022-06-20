@@ -1,6 +1,6 @@
 import {http, httpAuth} from "./index"
 
-class UserService {
+class AuthService {
     login = (email, password) => {
         return http.post("auth/login/", {email, password})
     }
@@ -15,4 +15,4 @@ class UserService {
     }
 }
 
-export default new UserService()
+export default new AuthService()

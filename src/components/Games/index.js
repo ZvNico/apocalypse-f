@@ -15,7 +15,7 @@ const Games = (props) => {
             {games.map(game => {
                 return (
                     <Grid key={`game-${game.id}`} item xs={12} sm={6} md={4} sx={{
-                        height: "200px"
+                        height: "250px"
                     }}>
                         <ButtonBase sx={{height: "100%", width: "100%", display: "block", borderRadius: 2}}
                                     component={Link} to={`/game/${game.id}`}>
