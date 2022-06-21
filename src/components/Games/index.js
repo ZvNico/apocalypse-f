@@ -36,7 +36,7 @@ const Games = (props) => {
                                         borderRadius: 1,
                                     }}>
                                         <Typography sx={{color: "white"}}>
-                                            -{Math.round(game.default_edition.initial_price / game.default_edition.price * 100)}%
+                                            {-(100 - Math.round(game.default_edition.price / game.default_edition.initial_price * 100))}%
                                         </Typography>
                                     </Box>
                                 </Box>

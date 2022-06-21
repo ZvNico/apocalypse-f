@@ -21,6 +21,7 @@ const SignUp = () => {
     return (<Box sx={{
         backgroundColor: "primary.contrastText",
         height: "calc(100vh - 100px)",
+        px: 3,
         width: "100%",
         display: "flex",
         justifyContent: "center",

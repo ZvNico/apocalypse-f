@@ -23,7 +23,7 @@ const Navbar = () => {
         },
         (user && {
             name: user.username,
-            link: "/",
+            link: "/cart",
             icon: null,
         }),
         (user && {
@@ -41,7 +41,7 @@ const Navbar = () => {
     return (
         <Stack direction={"row"}
                sx={{
-                   [theme.breakpoints.down('md')]: {
+                   [theme.breakpoints.down('sm')]: {
                        flexDirection: "column"
                    },
                    backgroundColor: "primary.contrastText",
