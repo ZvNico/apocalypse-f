@@ -1,5 +1,5 @@
 import {Button, Stack, Typography, useTheme, Menu, MenuItem} from "@mui/material";
-import {AccountCircle} from '@mui/icons-material'
+import {AccountCircle, ArrowDropUp} from '@mui/icons-material'
 import {Link} from "react-router-dom"
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux"
@@ -8,7 +8,8 @@ import {logout} from "../../actions/auth";
 const Navbar = () => {
     const theme = useTheme()
     const dispatch = useDispatch()
-    const [open, setOpen] = useState(false)
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl)
     const user = useSelector(state => state.user.user)
     const menuItems = [
         {
@@ -21,23 +22,45 @@ const Navbar = () => {
             link: "/shop",
             icon: null
         },
-        (user && {
-            name: user.username,
-            link: "/cart",
-            icon: null,
-        }),
-        (user && {
-            name: "se deconnecter",
-            link: "/",
-            icon: null,
-            onClick: () => dispatch(logout()),
-        }),
-        (!user && {
-            name: "Connexion",
-            link: "/login",
-            icon: AccountCircle,
-        }),
+        (user
+            ? {
+                name: user.username,
+                icon: ArrowDropUp,
+                childs: [
+                    {
+                        name: user.email,
+                        onClick: (e) => {
+                            handleClose()
+                        }
+                    },
+                    {
+                        name: "Panier",
+                        link: "/cart",
+                        onClick: (e) => {
+                            handleClose()
+                        }
+                    },
+                    {
+                        name: "Se Deconnecter",
+                        icon: null,
+                        onClick: (e) => {
+                            handleClose()
+                            dispatch(logout())
+                        }
+                    }],
+            }
+            : {
+                name: "Connexion",
+                link: "/login",
+                icon: AccountCircle,
+            })
     ]
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     return (
         <Stack direction={"row"}
                sx={{
@@ -52,26 +75,55 @@ const Navbar = () => {
                        py: 1,
                    }
                }}>
-            {menuItems.filter(item => item?.name != null).map((item, index) => {
-                return <Button
-                    color={"primary"}
-                    key={`menu-item-${index}`}
-                    component={item.link ? Link : null}
-                    to={item.link ? item.link : null}
-                    onClick={() => {
-                        if (item.onClick) {
-                            item.onClick()
-                        }
-                    }}
-                    sx={{
-                        display: "flex",
-                        alignItems: "center"
-                    }}>
-                    {item.icon != null && <item.icon size={"large"} sx={{
-                        mr: 0.5,
-                    }}/>}
-                    <Typography sx={{textAlign: "center"}}>{item.name}</Typography>
-                </Button>
+            {menuItems.map((item, index) => {
+                return (<>
+                    <Button
+                        id={item.childs && "basic-button"}
+                        color={"primary"}
+                        key={`navbar-item-button-${index}`}
+                        component={item.link ? Link : null}
+                        to={item.link ? item.link : null}
+                        onClick={(e) => {
+                            if (item.onClick) {
+                                item.onClick()
+                            }
+                            handleClick(e)
+                        }}
+                        sx={{
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                        {item.icon != null && <item.icon size={"large"} sx={{
+                            mr: 0.5,
+                            transition: "0.3s all ease-in",
+                            transform: (item.childs && open) && "rotate(180deg)",
+                        }}/>}
+                        <Typography sx={{textAlign: "center"}}>{item.name}</Typography>
+                    </Button>
+                    {item.childs?.length > 0 &&
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}>
+                            {item.childs.map((child, i) => {
+                                return (
+                                    <MenuItem component={child.link ? Link : null}
+                                              to={child.link ? child.link : null}
+                                              key={`menu-item-${i}`}
+                                              onClick={child.onClick}
+                                              sx={{
+                                                  width: "100%"
+                                              }}>
+                                        {child.name}
+                                    </MenuItem>
+                                )
+                            })}
+                        </Menu>}
+                </>)
             })
             }
         </Stack>

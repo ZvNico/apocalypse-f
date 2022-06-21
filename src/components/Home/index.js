@@ -11,6 +11,7 @@ import SignUp from "../SignUp"
 import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllGames} from "../../actions/game";
+import Cart from "../Cart";
 
 const Home = () => {
     const [logged, setLogged] = useState(false)
@@ -96,6 +97,11 @@ const Home = () => {
                     <Route path={"/signup"}
                            element={
                                <SignUp/>
+                           }
+                    />
+                    <Route path={"/cart"}
+                           element={
+                               <Cart/>
                            }
                     />
                 </Routes>
